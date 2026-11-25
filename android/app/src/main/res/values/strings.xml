@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">SaborExpress</string>
+    <string name="title_activity_main">SaborExpress</string>
+    <string name="package_name">com.saborexpress.app</string>
+    <string name="custom_url_scheme">com.saborexpress.app</string>
+</resources>

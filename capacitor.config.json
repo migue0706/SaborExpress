@@ -1,0 +1,6 @@
+{
+  "appId": "com.saborexpress.app",
+  "appName": "SaborExpress",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}
