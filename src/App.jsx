@@ -43,6 +43,7 @@ export default function App() {
   // Estados de Formulario Platillo (Crear / Editar Admin - RF-05)
   const [mostrarFormPlatillo, setMostrarFormPlatillo] = useState(false);
   const [editandoId, setEditandoId] = useState(null);
+  const [platilloAEliminar, setPlatilloAEliminar] = useState(null);
   const [formPlatillo, setFormPlatillo] = useState({
     nombre: '',
     id_categoria: 2,
@@ -74,6 +75,7 @@ export default function App() {
       saveCarritoUsuario(claveCarrito, carrito);
     }
   }, [carrito, usuario, carritoCargado]);
+
   useEffect(() => {
     const sincronizar = () => setDb(getDB());
 
@@ -816,7 +818,7 @@ export default function App() {
 
                   <button
                     className="btn btn-sm btn-danger-outline"
-                    onClick={() => handleEliminarPlatillo(prod)}
+                    onClick={() => setPlatilloAEliminar(prod)}
                     title="Eliminar producto"
                   >
                     <Trash2 size={14} />
@@ -824,6 +826,49 @@ export default function App() {
                 </div>
               </div>
             ))}
+
+            {platilloAEliminar && (
+              <div
+                className="modal-overlay"
+                onClick={(e) => {
+                  if (e.target === e.currentTarget) setPlatilloAEliminar(null);
+                }}
+              >
+                <div className="modal-card" style={{ textAlign: 'center' }}>
+                  <div style={{
+                    background: '#FFEBEE', color: 'var(--danger)', width: 52, height: 52,
+                    borderRadius: '50%', display: 'inline-flex', alignItems: 'center',
+                    justifyContent: 'center', marginBottom: 12
+                  }}>
+                    <AlertCircle size={28} />
+                  </div>
+                  <h3 style={{ fontSize: '1.1rem', marginBottom: 8 }}>Confirmar eliminación</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', marginBottom: 18 }}>
+                    ¿Estás seguro que quieres eliminar <strong>"{platilloAEliminar.nombre}"</strong>, por favor?
+                  </p>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <button
+                      type="button"
+                      className="btn btn-outline"
+                      onClick={() => setPlatilloAEliminar(null)}
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      type="button"
+                      className="btn"
+                      style={{ background: 'var(--danger)', color: 'white', width: '100%' }}
+                      onClick={() => {
+                        handleEliminarPlatillo(platilloAEliminar);
+                        setPlatilloAEliminar(null);
+                      }}
+                    >
+                      Sí, eliminar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </>
         )}
 
@@ -883,7 +928,7 @@ export default function App() {
             </>
           );
         })()}
-        </div>
+      </div>
 
       {/* BARRA DE NAVEGACIÓN INFERIOR EXCLUSIVA DE ADMINISTRADOR */}
       <nav className="bottom-nav">
